@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34714.143
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleTransater", "ConsoleTransater.csproj", "{B4A8FDF5-A9A9-429B-9F59-014B28EA61BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TranslateService", "..\TranslateService\TranslateService.csproj", "{2BB6F1DC-6E92-48E9-970A-8C833D80E23F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B4A8FDF5-A9A9-429B-9F59-014B28EA61BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B4A8FDF5-A9A9-429B-9F59-014B28EA61BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B4A8FDF5-A9A9-429B-9F59-014B28EA61BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B4A8FDF5-A9A9-429B-9F59-014B28EA61BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BB6F1DC-6E92-48E9-970A-8C833D80E23F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BB6F1DC-6E92-48E9-970A-8C833D80E23F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BB6F1DC-6E92-48E9-970A-8C833D80E23F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BB6F1DC-6E92-48E9-970A-8C833D80E23F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DCED56B-2E1F-4AC0-957D-DA6A589EC6F6}
+	EndGlobalSection
+EndGlobal
