@@ -6,6 +6,7 @@ namespace TranslateService.DI.TranslateServices
     {
         private const string _info = "Yandex translate";
         private readonly ICashService _cashService;
+        private const string _url = "https://translate.api.cloud.yandex.net/translate/v2/translate";
 
         public YandexTranslateService(ICashService cashService) 
         {
@@ -26,6 +27,20 @@ namespace TranslateService.DI.TranslateServices
             translates.Add(new TranslateModel("Hello"));
 
             return translates.ToArray();
+        }
+
+        private string[] ReadCash(string[] texts)
+        {
+            var result = new List<string>();
+            foreach(string text in texts)
+            {
+                if(_cashService.Get(text, out string value))
+                {
+                    result.Add(value);
+                }
+            }
+
+            return result.ToArray();
         }
     }
 }
