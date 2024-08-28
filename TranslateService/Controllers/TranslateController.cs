@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using TranslateService.DI;
+using TranslateService.DI.TranslateServices;
 using TranslateService.Models;
 
 namespace TranslateService.Controllers
@@ -8,15 +10,24 @@ namespace TranslateService.Controllers
     [ApiController]
     public class TranslateController : ControllerBase
     {
-        [HttpPost]
-        public IEnumerable<TranslateModel> Post([FromBody] TaskTranslationModel taskTranslationModel)
-        {
-            var translates = new List<TranslateModel>();
-            translates.Add(new TranslateModel("Hello"));
-            translates.Add(new TranslateModel("Hello"));
-            translates.Add(new TranslateModel("Hello"));
+        private readonly ITranslateService _translateService;
 
-            return translates.ToArray();
+        public TranslateController(ITranslateService translateService) 
+        {
+            _translateService = translateService;
+        }
+
+        [HttpPost]
+        public IEnumerable<TranslateModel> Post([FromBody]TaskTranslationModel taskTranslationModel)
+        {
+            return _translateService.Translate(taskTranslationModel);
+
+            //var translates = new List<TranslateModel>();
+            //translates.Add(new TranslateModel("Hello"));
+            //translates.Add(new TranslateModel("Hello"));
+            //translates.Add(new TranslateModel("Hello"));
+
+            //return translates.ToArray();
         }
     }
 }
