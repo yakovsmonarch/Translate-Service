@@ -1,4 +1,6 @@
-﻿using TranslateService.Models;
+﻿using Newtonsoft.Json;
+using System.Text;
+using TranslateService.Models;
 
 namespace TranslateService.DI.TranslateServices
 {
@@ -41,6 +43,28 @@ namespace TranslateService.DI.TranslateServices
             }
 
             return result.ToArray();
+        }
+
+        private async Task<IEnumerable<TranslateModel>> Post(string url, string jsonData)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+                HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
+                HttpResponseMessage response = await client.PostAsync(url, content);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string responseBody = await response.Content.ReadAsStringAsync();
+                    IEnumerable<TranslateModel> result = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(responseBody);
+                    return result;
+                }
+                else
+                {
+                    string error = response.StatusCode.ToString();
+                    return null;
+                }
+            }
         }
     }
 }
