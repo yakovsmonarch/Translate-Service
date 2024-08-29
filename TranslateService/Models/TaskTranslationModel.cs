@@ -2,6 +2,8 @@
 {
     public class TaskTranslationModel
     {
+        public string FolderId { get; set; }
+
         public string[] Texts { get; set; }
 
         public string TargetLanguageCode { get; set; }

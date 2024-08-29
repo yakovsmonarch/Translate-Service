@@ -16,10 +16,10 @@ namespace TranslateService.Controllers
         }
 
         [HttpPost]
-        public IEnumerable<TranslateModel> Post([FromBody]TaskTranslationModel taskTranslationModel)
+        public async Task<IEnumerable<TranslateModel>> Post([FromBody]TaskTranslationModel taskTranslationModel)
         {
 
-            return _translateService.Translate(taskTranslationModel);
+            return await _translateService.Translate(taskTranslationModel);
         }
     }
 }

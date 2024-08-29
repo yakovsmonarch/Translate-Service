@@ -10,7 +10,7 @@ namespace TranslateService.DI
         /// </summary>
         /// <param name="taskTranslationModel"></param>
         /// <returns></returns>
-        IEnumerable<TranslateModel> Translate(TaskTranslationModel taskTranslationModel);
+        Task<IEnumerable<TranslateModel>> Translate(TaskTranslationModel taskTranslationModel);
 
         /// <summary>
         /// Получение информации о сервисе.
