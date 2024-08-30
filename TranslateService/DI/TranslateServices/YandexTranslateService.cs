@@ -26,6 +26,7 @@ namespace TranslateService.DI.TranslateServices
         public WrapperResponse Translate(TaskTranslationModel taskTranslationModel)
         {
             taskTranslationModel.FolderId = _folderId;
+            taskTranslationModel.Texts = _cashService.Get(taskTranslationModel.Texts);
             string json = Post(_url, taskTranslationModel);
             var result = JsonConvert.DeserializeObject<WrapperResponse>(json);
             return result;

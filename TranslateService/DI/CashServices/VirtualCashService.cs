@@ -26,8 +26,8 @@
 
             foreach(string word in words)
             {
-                if (_cash.ContainsKey(word) == false) continue;
-                result.Add(_cash[word]);
+                if (_cash.ContainsKey(word)) continue;
+                result.Add(word);
             }
 
             return result.ToArray();

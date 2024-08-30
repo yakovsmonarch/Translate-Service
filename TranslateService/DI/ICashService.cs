@@ -10,7 +10,7 @@
         void Add(string[] source, string[] target);
 
         /// <summary>
-        /// Возвращает сохраненный перевод.
+        /// Возвращает не переведенные слова.
         /// </summary>
         /// <param name="words">Слова для перевода от пользователя</param>
         /// <returns></returns>
