@@ -15,8 +15,7 @@ namespace TranslateService.DI
         /// <summary>
         /// Получение информации о сервисе.
         /// </summary>
-        /// <param name="serviceId"></param>
         /// <returns></returns>
-        ServiceInfoModel GetServiceInfo(string serviceId);
+        ServiceInfoModel GetServiceInfo();
     }
 }

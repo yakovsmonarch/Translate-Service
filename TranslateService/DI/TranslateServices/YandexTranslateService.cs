@@ -1,6 +1,4 @@
 ﻿using Newtonsoft.Json;
-using System.Collections.Generic;
-using System.Net.Http.Headers;
 using System.Text;
 using TranslateService.Models;
 
@@ -19,7 +17,7 @@ namespace TranslateService.DI.TranslateServices
             _cashService = cashService;
         }
 
-        public ServiceInfoModel GetServiceInfo(string serviceId)
+        public ServiceInfoModel GetServiceInfo()
         {
             var serviceInfo = new ServiceInfoModel(_cashService.GetSizeCash(), _info);
             return serviceInfo;
@@ -27,9 +25,6 @@ namespace TranslateService.DI.TranslateServices
 
         public WrapperResponse Translate(TaskTranslationModel taskTranslationModel)
         {
-            //int a = 1;
-            //int b = 0;
-            //int c = a / b;
             taskTranslationModel.FolderId = _folderId;
             string json = Post(_url, taskTranslationModel);
             var result = JsonConvert.DeserializeObject<WrapperResponse>(json);
@@ -62,9 +57,7 @@ namespace TranslateService.DI.TranslateServices
 
             using var response = client.Send(request);
             response.EnsureSuccessStatusCode();
-
             string resultJson = response.Content.ReadAsStringAsync().Result;
-            //var result = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(resultJson);
             return resultJson;
         }
     }

@@ -1,21 +1,25 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using TranslateService.DI;
 using TranslateService.Models;
 
 namespace TranslateService.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class LanguagesController : ControllerBase
     {
-        [HttpGet]
-        public IEnumerable<LanguangeModel> Get()
-        {
-            var languages = new List<LanguangeModel>();
-            languages.Add(new LanguangeModel("ru", "rusian"));
-            languages.Add(new LanguangeModel("en", "english"));
+        private readonly ITranslateService _translateService;
 
-            return languages.ToArray();
+        public LanguagesController(ITranslateService translateService)
+        {
+            _translateService = translateService;
+        }
+
+        [HttpGet]
+        public ServiceInfoModel Get()
+        {
+
+            return _translateService.GetServiceInfo();
         }
     }
 }
