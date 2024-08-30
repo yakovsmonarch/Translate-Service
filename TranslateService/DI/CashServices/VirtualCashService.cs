@@ -9,21 +9,28 @@
             _cash = new Dictionary<string, string>();
         }
 
-        public void Add(string key, string value)
+        public void Add(string[] source, string[] target)
         {
-            _cash.TryAdd(key, value);
+            if (source == null || target == null) return;
+            if (source.Length != target.Length) return;
+
+            for(int i = 0; i < source.Length; i++)
+            {
+                _cash.TryAdd(source[i], target[i]);
+            }
         }
 
-        public bool Get(string key, out string value)
+        public string[] Get(string[] words)
         {
-            if (_cash.ContainsKey(key))
+            var result = new List<string>();
+
+            foreach(string word in words)
             {
-                value = _cash[key];
-                return true;
+                if (_cash.ContainsKey(word) == false) continue;
+                result.Add(_cash[word]);
             }
 
-            value = string.Empty;
-            return false;
+            return result.ToArray();
         }
 
         public ulong GetSizeCash()

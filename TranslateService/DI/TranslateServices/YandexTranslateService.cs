@@ -31,20 +31,6 @@ namespace TranslateService.DI.TranslateServices
             return result;
         }
 
-        private string[] ReadCash(string[] texts)
-        {
-            var result = new List<string>();
-            foreach(string text in texts)
-            {
-                if(_cashService.Get(text, out string value))
-                {
-                    result.Add(value);
-                }
-            }
-
-            return result.ToArray();
-        }
-
         private string Post(string url, TaskTranslationModel taskTranslationModel)
         {
             using var client = new HttpClient();
@@ -60,5 +46,7 @@ namespace TranslateService.DI.TranslateServices
             string resultJson = response.Content.ReadAsStringAsync().Result;
             return resultJson;
         }
+
+
     }
 }

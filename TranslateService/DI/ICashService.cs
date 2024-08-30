@@ -3,19 +3,18 @@
     public interface ICashService
     {
         /// <summary>
-        /// Добавить перевод в кэш.
+        /// Добавляет в кэш резуьтат перевода.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
-        void Add(string key, string value);
+        /// <param name="source">Переводимые слова</param>
+        /// <param name="target">Переведенные слова</param>
+        void Add(string[] source, string[] target);
 
         /// <summary>
-        /// Получить перевод из кэша.
+        /// Возвращает сохраненный перевод.
         /// </summary>
-        /// <param name="key"></param>
-        /// <param name="value"></param>
+        /// <param name="words">Слова для перевода от пользователя</param>
         /// <returns></returns>
-        bool Get(string key, out string value);
+        string[] Get(string[] words);
 
         /// <summary>
         /// Число переводов в кэше.
