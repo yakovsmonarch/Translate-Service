@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Text;
 using TranslateService.Models;
@@ -10,7 +11,7 @@ namespace TranslateService.DI.TranslateServices
         private const string _info = "Yandex translate";
         private readonly ICashService _cashService;
         private const string _url = "https://translate.api.cloud.yandex.net/translate/v2/translate";
-        private const string _iamToken = "Bearer t1.9euelZrMjoqJj8aeyI-OlJuRl5HMk-3rnpWal5qclo6Pj5ecy4_Oz5qPmMjl8_cUZD1J-e82Tnku_t3z91QSO0n57zZOeS7-zef1656VmpOUj5yaxpzNyZaKjpGOzYrO7_zF656VmpOUj5yaxpzNyZaKjpGOzYrO.FglY9SrmuvdZKCe5ZQfgFZ9TyrlMz0cua4S43IRIjik1zcRX_IkT1GD2DwvaQTabK4d2YhqPpdLBhfnETA6TAw";
+        private const string _iamToken = "Bearer t1.9euelZqXlI_JzY2cio-TmsyUiZ6RlO3rnpWal5qclo6Pj5ecy4_Oz5qPmMjl9PdVejhJ-e9VDz7J3fT3FSk2SfnvVQ8-yc3n9euelZqOlciby4nHkJyPj82NzMbOzO_8xeuelZqOlciby4nHkJyPj82NzMbOzA.lPiwQi1fsMTHgXjwcLIeZ-aXXAGBAd8iV0WudpkPNkFyInjSWp5Q7TcTxhOlgNy3PD0ynA1ItWAs00srDng1CA";
         private const string _folderId = "b1gbq7fg2cq65bvr6d3r";
 
         public YandexTranslateService(ICashService cashService) 
@@ -24,18 +25,15 @@ namespace TranslateService.DI.TranslateServices
             return serviceInfo;
         }
 
-        public async Task<IEnumerable<TranslateModel>> Translate(TaskTranslationModel taskTranslationModel)
+        public WrapperResponse Translate(TaskTranslationModel taskTranslationModel)
         {
+            //int a = 1;
+            //int b = 0;
+            //int c = a / b;
             taskTranslationModel.FolderId = _folderId;
-            var result = await Post(_url, taskTranslationModel);
+            string json = Post(_url, taskTranslationModel);
+            var result = JsonConvert.DeserializeObject<WrapperResponse>(json);
             return result;
-
-            //var translates = new List<TranslateModel>();
-            //translates.Add(new TranslateModel("Hello"));
-            //translates.Add(new TranslateModel("Hello"));
-            //translates.Add(new TranslateModel("Hello"));
-
-            //return translates.ToArray();
         }
 
         private string[] ReadCash(string[] texts)
@@ -52,77 +50,22 @@ namespace TranslateService.DI.TranslateServices
             return result.ToArray();
         }
 
-        private async Task<IEnumerable<TranslateModel>> Post(string url, TaskTranslationModel taskTranslationModel)
+        private string Post(string url, TaskTranslationModel taskTranslationModel)
         {
-            /*
-                var folderId = "b1gbq7fg2cq65bvr6d3r";
-                var texts = new[] { "привет", "мир" };
-                var targetLanguageCode = "de";
-                var sourceLanguageCode = "ru";
-
-                // Создание JSON-объекта
-                var jsonData = new
-                {
-                    folderId = folderId,
-                    texts = texts,
-                    targetLanguageCode = targetLanguageCode,
-                    sourceLanguageCode = sourceLanguageCode
-                };
-
-                // Преобразование JSON-объекта в строку
-                var jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(jsonData);
-
-                // Создание HTTP-клиента
-                using (var client = new HttpClient())
-                {
-                    // Установка заголовков
-                    client.DefaultRequestHeaders.Add("Authorization", "Bearer t1.9euelZrMjoqJj8aeyI-OlJuRl5HMk-3rnpWal5qclo6Pj5ecy4_Oz5qPmMjl8_cUZD1J-e82Tnku_t3z91QSO0n57zZOeS7-zef1656VmpOUj5yaxpzNyZaKjpGOzYrO7_zF656VmpOUj5yaxpzNyZaKjpGOzYrO.FglY9SrmuvdZKCe5ZQfgFZ9TyrlMz0cua4S43IRIjik1zcRX_IkT1GD2DwvaQTabK4d2YhqPpdLBhfnETA6TAw");
-                    
-                    // Создание контента запроса
-                    var content = new StringContent(jsonString, Encoding.UTF8, "application/json");
-
-                    // Отправка POST-запроса
-                    var response = await client.PostAsync(url, content);
-
-                    // Получение и вывод результата
-                    var responseBody = await response.Content.ReadAsStringAsync();
-                    IEnumerable<TranslateModel> result = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(responseBody);
-                    return result;
-                }
-                */
-
-            //string jsonData = JsonConvert.SerializeObject(taskTranslationModel);
-            //client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
-            //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Authorization", _iamToken);
-
-
-            //HttpContent content = new StringContent(jsonData, Encoding.UTF8, "application/json");
-
-            //HttpResponseMessage response = await client.PostAsync(url, content);
-
-            //if (response.IsSuccessStatusCode)
-            //{
-            //    string responseBody = await response.Content.ReadAsStringAsync();
-            //    IEnumerable<TranslateModel> result = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(responseBody);
-            //    return result;
-            //}
-            //else
-            //{
-            //    string error = response.StatusCode.ToString();
-            //    return null;
-            //}
-
-
-            var client = new HttpClient();
-            var request = new HttpRequestMessage(HttpMethod.Post, "https://translate.api.cloud.yandex.net/translate/v2/translate");
+            using var client = new HttpClient();
+            using var request = new HttpRequestMessage(HttpMethod.Post, url);
             request.Headers.Add("Authorization", _iamToken);
-            var content = new StringContent("{\n    \"folderId\": \"b1gbq7fg2cq65bvr6d3r\",\n    \"texts\": [\"привет\", \"мир\"],\n    \"targetLanguageCode\": \"de\",\n    \"sourceLanguageCode\": \"ru\"\n}", Encoding.UTF8, "application/json");
+
+            string jsonData = JsonConvert.SerializeObject(taskTranslationModel);
+            var content = new StringContent(jsonData, Encoding.UTF8, "application/json");
             request.Content = content;
-            var response = await client.SendAsync(request);
+
+            using var response = client.Send(request);
             response.EnsureSuccessStatusCode();
-            var result = await response.Content.ReadAsStringAsync();
-            IEnumerable<TranslateModel> result1 = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(result);
-            return result1;
+
+            string resultJson = response.Content.ReadAsStringAsync().Result;
+            //var result = JsonConvert.DeserializeObject<IEnumerable<TranslateModel>>(resultJson);
+            return resultJson;
         }
     }
 }
